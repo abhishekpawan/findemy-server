@@ -35,6 +35,38 @@ const getCourse = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Get searched Courses data
+// @route GET /courses?skip=0&limit=10&search=""
+// @access Public
+const getSearchCourses = asyncHandler(async (req, res) => {
+  const { search, limit, skip } = req.query;
+  try {
+    const totalCourses = await Course.find({
+      $text: { $search: search.toString() },
+    });
+
+    const totalPage = Math.ceil(totalCourses.length / parseInt(limit));
+
+    const currentPage =
+      parseInt(skip) === 0 ? 1 : parseInt(skip) / parseInt(limit) + 1;
+
+    const courses = await Course.find({
+      $text: { $search: search.toString() },
+    })
+      .skip(skip)
+      .limit(limit);
+
+    if (!courses) {
+      return res
+        .status(404)
+        .json({ success: false, message: "course not found!" });
+    }
+    res.status(200).json({ success: true, courses, totalPage, currentPage });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error });
+  }
+});
+
 // @desc Get All Courses data
 // @route GET /courses/all
 // @access Public
@@ -75,6 +107,7 @@ const getInstructorCourses = asyncHandler(async (req, res) => {
 module.exports = {
   createCourse,
   getCourse,
+  getSearchCourses,
   getInstructorCourses,
   getAllCourses,
 };

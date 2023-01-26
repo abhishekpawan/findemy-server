@@ -57,7 +57,6 @@ const addInstructor = asyncHandler(async (req, res) => {
         .json({ success: false, message: "Invalid Instructor Data" });
     }
   } catch (error) {
-    console.log(error);
     res.status(409).json({ success: false, message: error });
   }
 });

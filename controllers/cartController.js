@@ -24,7 +24,7 @@ const addCourseToCart = asyncHandler(async (req, res) => {
     if (courseExistInBoughtCourses) {
       return res.status(400).json({
         success: false,
-        message: "You have already puchased this course",
+        message: "You have already purchased this course",
       });
     }
 
@@ -81,15 +81,15 @@ const deleteCartCourse = asyncHandler(async (req, res) => {
     if (!cartCourse) {
       return res
         .status(404)
-        .json({ succes: false, message: "Course not found in the cart!" });
+        .json({ success: false, message: "Course not found in the cart!" });
     }
     res.status(200).json({
-      succes: true,
+      success: true,
       cartCourse,
       message: "Course succesfully removed form the cart!",
     });
   } catch (error) {
-    res.status(500).json({ succes: false, message: error });
+    res.status(500).json({ success: false, message: error });
   }
 });
 

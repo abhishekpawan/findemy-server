@@ -45,7 +45,7 @@ const addBoughtCourse = asyncHandler(async (req, res) => {
 // @desc Get cart Course data of a user
 // @route GET /cart/user/:id
 // @access Private
-const getUserBaughtCourses = asyncHandler(async (req, res) => {
+const getUserBoughtCourses = asyncHandler(async (req, res) => {
   try {
     //checking is user exist
     const _id = req.params.id;
@@ -59,13 +59,13 @@ const getUserBaughtCourses = asyncHandler(async (req, res) => {
 
     const user_id = req.params.id;
     //getting all cart courses of a user
-    const cartCourse = await Cart.find({ user_id });
-    if (!cartCourse) {
+    const boughtCourse = await BoughtCourse.find({ user_id });
+    if (!boughtCourse) {
       return res
         .status(404)
-        .json({ success: false, message: "cart course not found!" });
+        .json({ success: false, message: "Purchased course not found!" });
     }
-    res.status(200).json({ success: true, cartCourse });
+    res.status(200).json({ success: true, boughtCourse });
   } catch (error) {
     res.status(500).json({ success: false, message: error });
   }
@@ -98,6 +98,6 @@ const getUserBaughtCourses = asyncHandler(async (req, res) => {
 
 module.exports = {
   addBoughtCourse,
-  getUserBaughtCourses,
+  getUserBoughtCourses,
   //   deleteCartCourse,
 };

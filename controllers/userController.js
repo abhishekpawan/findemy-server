@@ -61,7 +61,6 @@ const signupUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(req.body);
 
     //checking all the require feilds are available
     if (!email || !password) {
