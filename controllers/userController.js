@@ -147,7 +147,7 @@ const getUser = asyncHandler(async (req, res) => {
 //   }
 
 //   await user.remove()
-//   res.status(200).json({id:req.params.id});
+//   res.status(200).json({id:req.params.id});s
 // });
 
 // Generate JWT

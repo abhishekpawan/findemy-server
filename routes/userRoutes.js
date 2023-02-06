@@ -6,7 +6,7 @@ const {
   getUser,
   //   getUsers,
   //   deleteUser,
-  //   updateUser,
+  //   updateUser,s
 } = require("../controllers/userController");
 const { protect } = require("../middleware/authMiddleware");
 

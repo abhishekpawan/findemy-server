@@ -12,16 +12,18 @@ const addCourseToCart = asyncHandler(async (req, res) => {
   try {
     //checking if course is already exist in cart
     const course_id = req.body.course_id;
-    const courseExistInCart = await Cart.findOne({ course_id });
-    const courseExistInBoughtCourses = await BoughtCourse.findOne({
+    const user_id = req.body.user_id;
+    const courseExistInCart = await Cart.find({ course_id, user_id });
+    const courseExistInBoughtCourses = await BoughtCourse.find({
+      user_id,
       course_id,
     });
-    if (courseExistInCart) {
+    if (courseExistInCart.length !== 0) {
       return res
         .status(400)
         .json({ success: false, message: "Course already exist in cart!" });
     }
-    if (courseExistInBoughtCourses) {
+    if (courseExistInBoughtCourses.length !== 0) {
       return res.status(400).json({
         success: false,
         message: "You have already purchased this course",

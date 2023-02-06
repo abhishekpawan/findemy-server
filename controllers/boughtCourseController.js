@@ -8,37 +8,43 @@ const User = require("../models/userModel");
 // @access Private
 const addBoughtCourse = asyncHandler(async (req, res) => {
   try {
-    //checking if course is already exist in cart
-    const course_id = req.body.course_id;
-    const courseExistInCart = await Cart.findOne({ course_id });
-    if (req.body.bought === false) {
-      return res.status(400).json({
-        success: false,
-        message: "Course purchase failed!",
-      });
-    }
-    if (courseExistInCart && req.body.bought === true) {
-      //adding course to cart
-      const boughtCourse = new BoughtCourse({
-        ...req.body,
-      });
-      boughtCourse.save();
-      res.status(201).json({
-        success: true,
-        boughtCourse,
-        message: "Course successfully purchased!",
-      });
+    const allBoughtCourse = [];
 
-      //deleting course from cart after successful purchase
+    for (const course of req.body) {
+      // }
+      // for (let i = 0; i < .length; i++) {
+      const course_id = course.course_id;
+      const user_id = course.user_id;
+      const courseExistInCart = await Cart.find({ user_id,course_id });
+      if (course.bought === false) {
+        return res.status(400).json({
+          success: false,
+          message: "Course purchase failed!",
+        });
+      } else if (courseExistInCart && course.bought === true) {
+        //adding course to cart
+        const boughtCourse = new BoughtCourse({
+          ...course,
+        });
+        boughtCourse.save();
+        allBoughtCourse.push(boughtCourse);
 
-      await Cart.findOneAndDelete({ course_id });
-    } else {
-      res
-        .status(400)
-        .json({ success: false, message: "Course doesn't exist in cart" });
+
+        //deleting course from cart after successful purchase
+        await Cart.findOneAndDelete({ _id:courseExistInCart[0]._id});
+      } else {
+        return res
+          .status(400)
+          .json({ success: false, message: "Course doesn't exist in cart" });
+      }
     }
+    return res.status(201).json({
+      success: true,
+      allBoughtCourse,
+      message: "Course successfully purchased!",
+    });
   } catch (error) {
-    res.status(409).json({ success: false, message: error });
+    res.status(500).json({ success: false, message: error });
   }
 });
 

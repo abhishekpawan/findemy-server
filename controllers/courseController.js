@@ -39,29 +39,68 @@ const getCourse = asyncHandler(async (req, res) => {
 // @route GET /courses?skip=0&limit=10&search=""
 // @access Public
 const getSearchCourses = asyncHandler(async (req, res) => {
-  const { search, limit, skip } = req.query;
   try {
-    const totalCourses = await Course.find({
-      $text: { $search: search.toString() },
+    const { search, limit, skip, levels, ratings } = req.query;
+    let finalSearchResult = [];
+    const searchResultbyText = await Course.find({
+      $text: { $search: search },
     });
+    finalSearchResult = searchResultbyText;
 
-    const totalPage = Math.ceil(totalCourses.length / parseInt(limit));
+    if (levels) {
+      const level = levels.split(",");
+
+      let totalFilteredCoursesByLevel = [];
+      for (let i = 0; i < level.length; i++) {
+        const filteredCoursesByLevel = finalSearchResult.filter((course) => {
+          return course.level === level[i];
+        });
+        totalFilteredCoursesByLevel = totalFilteredCoursesByLevel.concat(
+          filteredCoursesByLevel
+        );
+      }
+
+      finalSearchResult = totalFilteredCoursesByLevel;
+    }
+
+    if (ratings) {
+      const rating = ratings.split(",");
+
+      let totalFilteredCoursesByRating = [];
+      for (let i = 0; i < rating.length; i++) {
+        const filteredCoursesByRating = finalSearchResult.filter((course) => {
+          return course.rating >= parseFloat(rating[i]);
+        });
+        totalFilteredCoursesByRating = totalFilteredCoursesByRating.concat(
+          filteredCoursesByRating
+        );
+      }
+
+      finalSearchResult = totalFilteredCoursesByRating;
+
+      finalSearchResult = finalSearchResult.filter((SearchResult, index) => {
+        return finalSearchResult.indexOf(SearchResult) === index;
+      });
+    }
+
+    const totalPage = Math.ceil(finalSearchResult.length / parseInt(limit));
 
     const currentPage =
       parseInt(skip) === 0 ? 1 : parseInt(skip) / parseInt(limit) + 1;
 
-    const courses = await Course.find({
-      $text: { $search: search.toString() },
-    })
-      .skip(skip)
-      .limit(limit);
+    // const courses = await Course.find({
+    //   $text: { $search: search.toString() },
+    // })
+    //   .skip(skip)
+    //   .limit(limit);
 
-    if (!courses) {
-      return res
-        .status(404)
-        .json({ success: false, message: "course not found!" });
-    }
-    res.status(200).json({ success: true, courses, totalPage, currentPage });
+    res.status(200).json({
+      success: true,
+      courses: finalSearchResult,
+      totalSearchResult: finalSearchResult.length,
+      totalPage,
+      currentPage,
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: error });
   }

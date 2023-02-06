@@ -11,7 +11,6 @@ const boughtCourseSchema = mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      unique: true,
     },
     user_id: {
       type: String,
