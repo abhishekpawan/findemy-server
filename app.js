@@ -20,6 +20,7 @@ app.use("/users", require("./routes/userRoutes"));
 app.use("/instructors", require("./routes/instructorRoutes"));
 app.use("/courses", require("./routes/courseRoutes"));
 app.use("/cart", require("./routes/cartRoutes"));
+app.use("/wishlist", require("./routes/wishlistRoutes"));
 app.use("/boughtcourse", require("./routes/boughtCoursesRoutes"));
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
