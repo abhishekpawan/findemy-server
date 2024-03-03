@@ -30,11 +30,11 @@ Powered by **MongoDB, Express, and Node.js**, our backend infrastructure guarant
 
 ## 🎯: Key Features:
 
-**Search and Filter:** Easily find courses using our advanced search feature, with additional filtering options based on skill levels (beginner, intermediate, expert) and course ratings.
-**User Authentication:** Seamlessly sign up and log in to access personalized features.
-**Course Management:** Add courses to your cart, save them to your wishlist, and smoothly proceed to checkout after login.
-**Instructor Profiles:** Explore individual instructor profiles and discover their curated courses.
-**Deployment:** Our frontend is deployed on Netlify for lightning-fast performance, while the backend is hosted on Glitch, ensuring high availability.
+- **Search and Filter:** Easily find courses using our advanced search feature, with additional filtering options based on skill levels (beginner, intermediate, expert) and course ratings.
+- **User Authentication:** Seamlessly sign up and log in to access personalized features.
+- **Course Management:** Add courses to your cart, save them to your wishlist, and smoothly proceed to checkout after login.
+- **Instructor Profiles:** Explore individual instructor profiles and discover their curated courses.
+- **Deployment:** Our frontend is deployed on Netlify for lightning-fast performance, while the backend is hosted on Glitch, ensuring high availability.
 
 **Discover, learn, and elevate your skills with Findemy today! 🚀**
 
