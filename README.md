@@ -2,7 +2,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-    <img src="" alt="" width="75%">
+    <img src="https://github.com/abhishekpawan/findemy-client/blob/main/src/Assets/img/findemy-title.png" alt="findemytitlle" width="75%">
 
   <h3 align="center">Findemy - An Udemy Clone</h3>
 
@@ -19,7 +19,7 @@
 # About The Project
 <div align="center">
   
-<img src="https://github.com/abhishekpawan/findemy-client/main/src/Assets/img/findemy-readme%20ss.png" alt="findemymockups" width="75%">
+<img src="https://github.com/abhishekpawan/findemy-client/blob/main/src/Assets/img/findemy-readme%20ss.png" alt="findemymockups" width="75%">
 
 </div>
 Welcome to **Findemy**, your go-to platform for discovering and learning a wide array of courses! 🎓
